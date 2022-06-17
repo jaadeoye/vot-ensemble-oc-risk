@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Oral cancer risk calculator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+  </head>
+  <body>
+      <div class="block">
+          <section class="hero is-light is-bold">
+              <div class="hero-body">
+                  <div class="container has-text-centered">
+                      <h1 class="title">ORAL CANCER/OED/OPMD RISK PREDICTION RESULTS</h1>
+                      <h2 class="subtitle">Results currently for research/informational purposes ONLY</h2>
+                  </div><br>
+                  <div class="container has-text-centered">
+                        <a href="{{url_for('index')}}" class="button is-danger is-rounded has-text-centered">Return to homepage</a>
+                  </div>
+
+              </div>
+          </section>
+      </div>
+      <article class="message is-info">
+          <div class="message-header">
+              Model Prediction
+          </div>
+          <div class="message-body">
+            <div class="card">
+                <!--
+                <header class="card-header">
+                    <p class="card-header-title is-centered">Algorithm prediction</p>
+                </header> -->
+                <div class="container has-text-centered">
+                        <div class="card-image">
+                                <figure class="image is-3by2">
+                                    {% if result_prediction == 0 %}
+                                      <img src="../static/lr.jpg" alt="" height="300" width="500">
+            
+                                      {% elif result_prediction == 1 %}
+                                      <img src="../static/hr.jpg" alt="" height="300" width="500">
+ 
+                                      {% else %}
+                                      'ERROR'
+            
+                                      {% endif %}
+                                </figure>
+                            </div>
+                </div>
+
+                <div class="card-content">
+                  <div class="media-content">
+                      {% if result_prediction == 0 %}
+                      <p style="color:blue; text-align:center"; class="title is-2">Low risk</p>
+		      <p style="background-color:lightblue; text-align:center"; class="title">Recommendation: Routine six-monthly oral screening</p>
+                      <p style="text-align:center"; class="title is-6">{{ model_selected }} classifier used for risk calculation</p>
+                        
+                      {% elif result_prediction == 1 %}
+                       <p style="color:red; text-align:center"; class="title is-2">High risk</p>
+		       <p style="background-color:lightblue; text-align:center"; class="title">Recommendation: Immediate oral cancer screening </p>
+                       <p style="text-align:center"; class="title is-6">{{ model_selected }} classifier used for risk calculation</p>
+
+
+                        {% else %}
+                        'ERROR!'
+
+			 {% endif %}
+
+                  </div>
+		<br>
+		<br>
+		<p style="color:green; text-align:center"; class="title is-4">Actual probabilities of [[low risk | high risk]] prediction - {{prob_prediction}} </p>
+		<br>
+		<br>
+		<p style="text-align:center"; class="title is-6">MODEL EXPLAINABILITY PLOT</p>
+		<br>
+		<center><img src={{ url }} alt="Shapley plot" height="300" width="500"></center><br><br>
+		<p style="text-align:center; background-color:black; color:white"; class="title is-6">FEATURE LIST (For explainability): 0 = Age; 1 = Occupation; 2 = Education; 3 = Smoking pack years; 
+		4 = Tobacco chewing; 5 = Second-hand smoking; 6 = expired CO level; 7 = Alcohol intake; 8 = Lifetime alcohol units; 9 = Betel nut chewing; 10 = Toothbrushing; 11 = Toothbrushing frequency; 
+		12 = Gum bleeding; 13 = Denture use; 14 = Fruit intake; 15 = Fish/Sea food intake; 16 = Red meat intake; 17 = Spicy foods intake; 18 = Level of spiciness score; 19 = Dental visitation; 
+		20 = Alcohol-based mouthwash; 21 =  Number of relatives with cancer; 22 = First-degree relative with cancer; 23 = Second degree relative with cancer; 24 = Clinical type of familial cancer; 
+		25 = Charlson comorbidity index; 26 = Hypertension status</p>
+                  <!--
+                  <div class="content">
+                      Using {{ model_selected }} 
+                  </div>
+              -->
+                </footer>
+            </div>
+          </div>
+      </article>    
+      <footer class="footer">
+            <div class="content has-text-centered">
+              <p>
+                <strong>Oral Cancer Research Theme, HKU | 2022 </strong>.<br>
+                <a href="https://facdent.hku.hk/research/oral-cancer.html">Website</a> | <a href="https://github.com/jaadeoye">Bug Report</a>
+              </p>
+            </div>
+          </footer>
+  </body>
+</html>

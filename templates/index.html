@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Oral cancer risk calculator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+  </head>
+  <body>
+      <div class="block">
+          <section class="hero is-dark is-bold">
+              <div class="hero-body">
+                  <div class="container has-text-centered">
+                      <h1 class="title">Oral cancer risk calculator</h1>
+                      <h2 class="subtitle">Soft voting ensemble-based risk predictor</h2>
+		      <h3 class="subtitle">27 pieces of information required! </h3>
+                  </div><br>
+                  <div class="container has-text-centered">
+                        <a href="{{url_for('index')}}" class="button is-info is-rounded has-text-centered">Reset</a>
+                  </div>
+
+              </div>
+          </section>
+      </div>
+      <article class="message is-info">
+          <div class="message-header">
+              <p>Input variables</p>
+          </div>
+          <div class="message-body">
+            <div class="card">
+                <!--
+                <header class="card-header">
+                    <p class="card-header-title is-centered">Input variables</p>
+                </header> -->
+                <div class="card-content">
+                    <form action="{{ url_for('analyze') }}" method="POST">
+                        <div class="columns">
+                            <div class="column">
+                                   <div class="field">
+                                            <label for="AGE" class="label">Age</label>
+                                            <div class="control">
+                                                <input type="number" name="AGE" class="input" placeholder="Number between 30 and 100" min="30" max="100" step="1.0">
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="OCC" class="label">Occupation</label>
+                                                <div class="select is-link">
+                                                        <select name="OCC" id="OCC">
+                                                            <option value="1">Artisan/Labour-related</option>
+                                                            <option value="2">Employed - public/private sector</option>
+                                                            <option value="4">Professional</option>
+                                                            <option value="5">Others - Clergy, Law enforcement, Students</option>
+                                                            <option value="3">Unemployed/retired</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="EDU" class="label">Educational Attainment</label>
+                                                <div class="select is-link">
+                                                        <select name="EDU" id="EDU">
+                                                            <option value="1">Low - None/Primary/Secondary</option>
+                                                            <option value="2">High - Tertiary/Postgraduate</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                    <div class="field">
+                                            <label for="SMK PK YRS" class="label">Smoking pack years (packs per day * smoking duration)</label>
+                                            <div class="control">
+                                                <input type="number" name="SMK PK YRS" class="input" placeholder="Number between 0 and 10000" min="0" max="10000" step="0.01">
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="TOB CHEW" class="label">Tobacco chewing</label>
+                                                <div class="select is-link">
+                                                        <select name="TOB CHEW" id="TOB CHEW">
+                                                            <option value="0">Non-chewer</option>
+                                                            <option value="1">Chewer</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="2ND HAND SMK" class="label">Second-hand smoking exposure</label>
+                                                <div class="select is-link">
+                                                        <select name="2ND HAND SMK" id="2ND HAND SMK">
+                                                            <option value="0">No exposure</option>
+                                                            <option value="1">Current exposure</option>
+							<option value="2">Previous exposure</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                    <div class="field">
+                                            <label for="eCO LEVEL" class="label">Expired carbon monoxide level (in ppm)</label>
+                                            <div class="control">
+                                                <input type="number" name="eCO LEVEL" class="input" placeholder="If unavailable, enter 2 (nonsmokers), 3 (exsmokers), or 9 (current smokers)" min="0" max="50" step="1.0">
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="ALC" class="label">Alcohol consumption</label>
+                                                <div class="select is-link">
+                                                        <select name="ALC" id="ALC">
+                                                            <option value="0">Non-drinker</option>
+                                                            <option value="1">Current drinker</option>
+                                                            <option value="2">Previous drinker</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                   <div class="field">
+                                            <label for="LIFE ALC" class="label">Lifetime alcohol unit</label>
+                                           <div class="control">
+                                                <input type="number" name="LIFE ALC" class="input" placeholder="Number between 0 and 10000 (Multiply alcohol unit per day and duration in years)" min="0" max="10000" step="0.01">
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="VBTL NUT" class="label">Betel nut chewing</label>
+                                                <div class="select is-link">
+                                                        <select name="BTL NUT" id="BTL NUT">
+                                                            <option value="0">No</option>
+                                                            <option value="1">Yes</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="BRUSH" class="label">Tooth cleaning frequency</label>
+                                                <div class="select is-link">
+                                                        <select name="BRUSH" id="BRUSH">
+                                                            <option value="1">Daily</option>
+                                                            <option value="0">Not daily</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="BRUSH FREQ" class="label">Number of times per frequency</label>
+                                                <div class="select is-link">
+                                                        <select name="BRUSH FREQ" id="BRUSH FREQ">
+                                                            <option value="1">Once</option>
+                                                            <option value="2">Twice or more</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="GUM BLEED" class="label">Gum bleeding (at least once monthly)</label>
+                                                <div class="select is-link">
+                                                        <select name="GUM BLEED" id="GUM BLEED">
+                                                            <option value="0">No</option>
+                                                            <option value="1">Yes</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="field">
+                                            <label for="RPD" class="label">Use of removable partial dentures</label>
+                                                <div class="select is-link">
+                                                        <select name="RPD" id="RPD">
+                                                            <option value="0">No</option>
+                                                            <option value="1">Yes</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+				</div>
+                            <div class="column">
+                                        <div class="field">
+                                            <label for="FRUIT" class="label">Frequency of fruit consumption</label>
+                                                <div class="select is-link">
+                                                        <select name="FRUIT" id="FRUIT">
+                                                            <option value="1">Daily</option>
+                                                            <option value="2">Alternate days</option>
+                                                            <option value="4">Weekly</option>
+                                                            <option value="5">Occasionally</option>
+                                                            <option value="3">Do not consume fruits</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="FISH" class="label">Frequency of fish/seafood consumption</label>
+                                                <div class="select is-link">
+                                                        <select name="FISH" id="FISH">
+                                                            <option value="1">Daily</option>
+                                                            <option value="2">Alternate days</option>
+                                                            <option value="4">Weekly</option>
+                                                            <option value="5">Occasionally</option>
+                                                            <option value="3">Do not consume fish/seafood</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="RED MEAT" class="label">Frequency of red/processed meat consumption</label>
+                                                <div class="select is-link">
+                                                        <select name="RED MEAT" id="RED MEAT">
+                                                            <option value="1">Daily</option>
+                                                            <option value="2">Alternate days</option>
+                                                            <option value="4">Weekly</option>
+                                                            <option value="5">Occasionally</option>
+                                                            <option value="3">Do not consume red/processed meat</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="SPICE" class="label">Consumption of spicy food</label>
+                                                <div class="select is-link">
+                                                        <select name="SPICE" id="SPICE">
+                                                            <option value="1">Yes</option>
+                                                            <option value="0">No</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                   <div class="field">
+                                            <label for="SPICE SCORE" class="label">Food spiciness level</label>
+                                           <div class="control">
+                                                <input type="number" name="SPICE SCORE" class="input" placeholder="Number between 0 and 10" min="0" max="10" step="0.5">
+                                            </div>
+                                        </div>
+                                    <div class="field">
+                                            <label for="DENT VISIT" class="label">Routine visits to Dentist/ENT specialists (within five years)</label>
+                                                <div class="select is-link">
+                                                        <select name="DENT VISIT" id="DENT VISIT">
+                                                            <option value="1">Regular - at least every six months/twice yearly</option>
+                                                            <option value="2">Intermediate - once yearly</option>
+                                                            <option value="0">Irregular - less than once yearly/no visits</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                    <div class="field">
+                                            <label for="MOUTHWASH" class="label">Use of alcohol containing mouthwash</label>
+                                                <div class="select is-link">
+                                                        <select name="MOUTHWASH" id="MOUTHWASH">
+                                                            <option value="0">No/Not applicable</option>
+                                                            <option value="1">Yes</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                   <div class="field">
+                                            <label for="FAM CANCER" class="label">Number of family members with cancer</label>
+                                           <div class="control">
+                                                <input type="number" name="FAM CANCER" class="input" placeholder="Number between 0 and 30 (Does not include spouse or spouse's family)" min="0" max="10" step="0.5">
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="1 DEG REL CANCER" class="label">First degree relative with cancer</label>
+                                                <div class="select is-link">
+                                                        <select name="1 DEG REL CANCER" id="1 DEG REL CANCER">
+                                                            <option value="0">No</option>
+                                                            <option value="1">Yes</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="2ND DEG REL CANCER" class="label">Second degree relative with cancer</label>
+                                                <div class="select is-link">
+                                                        <select name="2ND DEG REL CANCER" id="2ND DEG REL CANCER">
+                                                            <option value="0">No</option>
+                                                            <option value="1">Yes</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="field">
+                                            <label for="CLIN TYPE FAM CANCER" class="label">Clinical type of cancer in family member</label>
+                                                <div class="select is-link">
+                                                        <select name="CLIN TYPE FAM CANCER" id="CLIN TYPE FAM CANCER">
+                                                            <option value="1">Head and neck cancer</option>
+                                                            <option value="2">Other malignancies</option>
+							<option value="3">Not applicable</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                                  <div class="field">
+                                            <label for="CCI" class="label">Charlson comorbidity index score</label>
+                                           <div class="control">
+                                                <input type="number" name="CCI" class="input" placeholder="Number between 0 and 100" min="0" max="100" step="1">
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="HTN" class="label">Hypertension status</label>
+                                                <div class="select is-link">
+                                                        <select name="HTN" id="HTN">
+                                                            <option value="0">No</option>
+                                                            <option value="1">Yes</option>
+                                                        </select>
+                                            </div>
+                                        </div>
+                            </div>
+                        </div>
+
+
+                      <br>
+                      <div class="container has-text-centered">
+                            <div class="field">
+                                    <label for="role" class="label">Select Model</label>
+                                    <div class="control">
+                                        <div class="container has-text-centered">
+                                                <div class="select is-success">
+                                                        <select name="model_choice" id="role">
+                                                            <option value="Soft voting ensemble">Risk of oral epithelial dysplasia/early malignancy</option>
+							    <option value="Retrained soft voting ensemble">Risk of oral potentially malignant disorders (OPMD)</option>
+                                                        </select>
+                                                    </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <br>
+                                <button class="button is-primary" type="submit">Predict</button>
+                                <button class="button" type="reset">Clear</button>
+                      </div>
+
+                    </form>
+                </div>
+            </div>
+          </div>
+      </article>
+
+      <footer class="footer">
+            <div class="content has-text-centered">
+              <p>
+                <strong>Oral Cancer Research Theme, HKU  |  2022 </strong><br>
+                <a href="https://facdent.hku.hk/research/oral-cancer.html">Group website</a> | <a href="https://github.com/jaadeoye">Bug Report</a>
+              </p>
+            </div>
+          </footer>
+  </body>
+</html>
